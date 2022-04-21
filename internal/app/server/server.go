@@ -6,21 +6,21 @@ import (
 	"github.com/truthray/url-shortening-service/internal/app/router"
 )
 
-type Server struct {
+type server struct {
 	Addr   string
 	Router http.HandlerFunc
 }
 
-func New() *Server {
+func New() *server {
 	r := router.New()
 
-	return &Server{
+	return &server{
 		Addr:   "localhost:8080",
 		Router: r,
 	}
 }
 
-func (s *Server) Start() error {
+func (s *server) Start() error {
 	http.Handle("/", s.Router)
 	return http.ListenAndServe(s.Addr, nil)
 }

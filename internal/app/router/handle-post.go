@@ -8,7 +8,7 @@ import (
 	"github.com/truthray/url-shortening-service/internal/app/storage"
 )
 
-func handlePost(w http.ResponseWriter, r *http.Request, data *storage.Storage) {
+func handlePost(w http.ResponseWriter, r *http.Request, data storage.Storage) {
 	b, err := io.ReadAll(r.Body)
 	if err != nil {
 		http.Error(w, "Body is missing", http.StatusBadRequest)

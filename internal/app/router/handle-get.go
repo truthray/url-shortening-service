@@ -9,7 +9,7 @@ import (
 	"github.com/truthray/url-shortening-service/internal/app/storage"
 )
 
-func handleGet(w http.ResponseWriter, r *http.Request, data *storage.Storage) {
+func handleGet(w http.ResponseWriter, r *http.Request, data storage.Storage) {
 	params := strings.Split(r.URL.Path, "/")
 	if len(params) < 2 {
 		http.Error(w, "Query parameter is missing", http.StatusBadRequest)
