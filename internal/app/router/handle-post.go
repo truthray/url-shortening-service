@@ -14,7 +14,14 @@ func handlePost(w http.ResponseWriter, r *http.Request, data storage.Storage) {
 		http.Error(w, "Body is missing", http.StatusBadRequest)
 		return
 	}
-	data.AddUrl(string(b))
+	stringBody := string(b)
+
+	if stringBody == "" {
+		http.Error(w, "Body is missing", http.StatusBadRequest)
+		return
+	}
+	data.AddUrl(stringBody)
+	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	fmt.Fprint(w, "localhost:8080/", data.CurrentIndex())
 }

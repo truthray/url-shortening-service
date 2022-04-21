@@ -22,6 +22,7 @@ func handleGet(w http.ResponseWriter, r *http.Request, data storage.Storage) {
 	}
 	if url, ok := data.GetUrl(code); ok {
 		w.Header().Set("Location", url)
+		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusTemporaryRedirect)
 		fmt.Fprint(w, url)
 		return
