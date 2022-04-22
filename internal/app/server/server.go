@@ -18,7 +18,7 @@ func New() *server {
 	r := router.New(s)
 
 	return &server{
-		Addr:   "localhost:8080",
+		Addr:   "127.0.0.1:8080",
 		Router: r,
 	}
 }

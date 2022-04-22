@@ -5,8 +5,8 @@ type storage struct {
 }
 
 type Storage interface {
-	GetUrl(id int) (string, bool)
-	AddUrl(url string)
+	GetURL(id int) (string, bool)
+	AddURL(url string)
 	CurrentIndex() int
 }
 
@@ -14,12 +14,12 @@ func (s *storage) CurrentIndex() int {
 	return len(s.urls) - 1
 }
 
-func (s *storage) GetUrl(id int) (string, bool) {
+func (s *storage) GetURL(id int) (string, bool) {
 	value, ok := s.urls[id]
 	return value, ok
 }
 
-func (s *storage) AddUrl(url string) {
+func (s *storage) AddURL(url string) {
 	if s.urls == nil {
 		s.urls = map[int]string{}
 	}

@@ -17,7 +17,7 @@ func handleGet(storage storage.Storage) http.HandlerFunc {
 			http.Error(w, "Query parameter is not integer", http.StatusBadRequest)
 			return
 		}
-		if url, ok := storage.GetUrl(code); ok {
+		if url, ok := storage.GetURL(code); ok {
 			w.Header().Set("Location", url)
 			w.Header().Set("Content-Type", "application/json")
 			w.WriteHeader(http.StatusTemporaryRedirect)

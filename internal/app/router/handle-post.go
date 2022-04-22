@@ -21,9 +21,9 @@ func handlePost(storage storage.Storage) http.HandlerFunc {
 			http.Error(w, "Body is missing", http.StatusBadRequest)
 			return
 		}
-		storage.AddUrl(stringBody)
+		storage.AddURL(stringBody)
 		w.Header().Set("Content-Type", "application/json")
 		w.WriteHeader(http.StatusCreated)
-		fmt.Fprint(w, "localhost:8080/", storage.CurrentIndex())
+		fmt.Fprint(w, "http://localhost:8080/", storage.CurrentIndex())
 	}
 }
