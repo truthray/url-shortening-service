@@ -3,13 +3,14 @@ package server
 import (
 	"net/http"
 
+	"github.com/gorilla/mux"
 	"github.com/truthray/url-shortening-service/internal/app/router"
 	"github.com/truthray/url-shortening-service/internal/app/storage"
 )
 
 type server struct {
 	Addr   string
-	Router http.HandlerFunc
+	Router *mux.Router
 }
 
 func New() *server {
@@ -23,6 +24,9 @@ func New() *server {
 }
 
 func (s *server) Start() error {
-	http.Handle("/", s.Router)
-	return http.ListenAndServe(s.Addr, nil)
+	server := &http.Server{
+		Handler: s.Router,
+		Addr:    s.Addr,
+	}
+	return server.ListenAndServe()
 }

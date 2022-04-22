@@ -103,7 +103,7 @@ func TestHandleGet(t *testing.T) {
 			},
 		},
 		{
-			name:    "Wrong id (1)",
+			name:    "Wrong id",
 			request: "/abc",
 			want: want{
 				contentType: "text/plain; charset=utf-8",
@@ -113,13 +113,13 @@ func TestHandleGet(t *testing.T) {
 			},
 		},
 		{
-			name:    "Wrong id (2)",
+			name:    "Wrong path",
 			request: "/",
 			want: want{
-				contentType: "text/plain; charset=utf-8",
-				statusCode:  http.StatusBadRequest,
+				contentType: "",
+				statusCode:  http.StatusMethodNotAllowed,
 				location:    "",
-				response:    "Query parameter is not integer\n",
+				response:    "",
 			},
 		},
 	}
