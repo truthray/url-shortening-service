@@ -30,7 +30,7 @@ func TestHandlePost(t *testing.T) {
 			want: want{
 				contentType: "application/json",
 				statusCode:  http.StatusCreated,
-				url:         "localhost:8080/0",
+				url:         "http://localhost:8080/0",
 			},
 		},
 		{
@@ -54,6 +54,7 @@ func TestHandlePost(t *testing.T) {
 
 			h.ServeHTTP(w, request)
 			r := w.Result()
+			defer r.Body.Close()
 
 			assert.Equal(t, tc.want.statusCode, r.StatusCode)
 			assert.Equal(t, tc.want.contentType, r.Header.Get("Content-Type"))
@@ -103,7 +104,7 @@ func TestHandleGet(t *testing.T) {
 			},
 		},
 		{
-			name:    "Wrong id (1)",
+			name:    "Wrong id",
 			request: "/abc",
 			want: want{
 				contentType: "text/plain; charset=utf-8",
@@ -113,26 +114,27 @@ func TestHandleGet(t *testing.T) {
 			},
 		},
 		{
-			name:    "Wrong id (2)",
+			name:    "Wrong path",
 			request: "/",
 			want: want{
-				contentType: "text/plain; charset=utf-8",
-				statusCode:  http.StatusBadRequest,
+				contentType: "",
+				statusCode:  http.StatusMethodNotAllowed,
 				location:    "",
-				response:    "Query parameter is not integer\n",
+				response:    "",
 			},
 		},
 	}
 	for _, tc := range testCases {
 		t.Run(tc.name, func(t *testing.T) {
 			s := storage.New()
-			s.AddUrl("yandex.ru")
+			s.AddURL("yandex.ru")
 			h := New(s)
 			w := httptest.NewRecorder()
 
 			getRequest := httptest.NewRequest(http.MethodGet, tc.request, nil)
 			h.ServeHTTP(w, getRequest)
 			r := w.Result()
+			defer r.Body.Close()
 
 			assert.Equal(t, tc.want.statusCode, r.StatusCode)
 			assert.Equal(t, tc.want.contentType, r.Header.Get("Content-Type"))
