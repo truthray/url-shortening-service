@@ -1,8 +1,7 @@
 package storage
 
 type storage struct {
-	urls         map[int]string
-	currentIndex int
+	urls map[int]string
 }
 
 type Storage interface {
@@ -12,7 +11,7 @@ type Storage interface {
 }
 
 func (s *storage) CurrentIndex() int {
-	return s.currentIndex - 1
+	return len(s.urls) - 1
 }
 
 func (s *storage) GetUrl(id int) (string, bool) {
@@ -22,11 +21,8 @@ func (s *storage) GetUrl(id int) (string, bool) {
 
 func (s *storage) AddUrl(url string) {
 	if s.urls == nil {
-		s.urls = map[int]string{
-			0: url,
-		}
+		s.urls = map[int]string{}
 	}
-	s.currentIndex += 1
 	s.urls[len(s.urls)] = url
 }
 

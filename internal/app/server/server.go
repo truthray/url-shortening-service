@@ -4,6 +4,7 @@ import (
 	"net/http"
 
 	"github.com/truthray/url-shortening-service/internal/app/router"
+	"github.com/truthray/url-shortening-service/internal/app/storage"
 )
 
 type server struct {
@@ -12,7 +13,8 @@ type server struct {
 }
 
 func New() *server {
-	r := router.New()
+	s := storage.New()
+	r := router.New(s)
 
 	return &server{
 		Addr:   "localhost:8080",
